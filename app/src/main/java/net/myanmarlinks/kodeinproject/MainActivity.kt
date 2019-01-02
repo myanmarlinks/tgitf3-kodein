@@ -8,8 +8,12 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import net.myanmarlinks.kodeinproject.car.Car
+import net.myanmarlinks.kodeinproject.car.CarColor
+import net.myanmarlinks.kodeinproject.car.CarType
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.closestKodein
+import org.kodein.di.generic.M
 import org.kodein.di.generic.instance
 
 class MainActivity : AppCompatActivity(), KodeinAware {
@@ -19,6 +23,10 @@ class MainActivity : AppCompatActivity(), KodeinAware {
     private val diceTwo: Dice by instance(tag = "diceTwo")
     private val inflater: LayoutInflater by instance()
 
+    private val toyotaCar: Car by instance (arg = M(CarColor.GREEN, CarType.Toyota))
+    private val mazadaCar: Car by instance(arg = M(CarColor.RED, CarType.Mazada))
+    private val nissanCar: Car by instance(arg = M(CarColor.BLUE, CarType.Nissan))
+
     private val apiUrl: String  by instance(tag = "API_URL")
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,6 +34,9 @@ class MainActivity : AppCompatActivity(), KodeinAware {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
         d("MY_APP", apiUrl)
+        d("MY_CAR", mazadaCar.makeCar())
+        d("MY_CAR", toyotaCar.makeCar())
+        d("MY_CAR", nissanCar.makeCar())
 
 
         fab.setOnClickListener { view ->
