@@ -15,7 +15,9 @@ import org.kodein.di.generic.*
 class MainApplication: Application(), KodeinAware{
     override val kodein = Kodein.lazy {
         import(androidXModule(this@MainApplication))
-        constant(tag = "API_URL") with "https://http://savethelibrarymyanmar.org/api/"
+
+
+        constant(tag = "API_URL") with "https://yourapi.com/api/"
 
 
         bind<Test>() with singleton { TestImpl() }
@@ -24,7 +26,9 @@ class MainApplication: Application(), KodeinAware{
         bind<Dice>() with provider { Dice() }
         bind<Dice>(tag = "diceTwo") with provider { Dice() }
 
-        bind<Car>() with factory { carColor: CarColor, carType: CarType -> CarFactory().create(carColor, carType) }
+        bind<Car>() with factory { carColor: CarColor,
+                                   carType: CarType
+            -> CarFactory().create(carColor, carType) }
     }
 
     override fun onCreate() {
