@@ -6,6 +6,11 @@ import net.myanmarlinks.kodeinproject.car.Car
 import net.myanmarlinks.kodeinproject.car.CarColor
 import net.myanmarlinks.kodeinproject.car.CarFactory
 import net.myanmarlinks.kodeinproject.car.CarType
+import net.myanmarlinks.kodeinproject.db.StudentDao
+import net.myanmarlinks.kodeinproject.db.StudentDaoImpl
+import net.myanmarlinks.kodeinproject.repository.StudentRepository
+import net.myanmarlinks.kodeinproject.repository.StudentRepositoryImpl
+import net.myanmarlinks.kodeinproject.viewmodel.StudentsViewModelFactory
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.androidXModule
@@ -29,6 +34,10 @@ class MainApplication: Application(), KodeinAware{
         bind<Car>() with factory { carColor: CarColor,
                                    carType: CarType
             -> CarFactory().create(carColor, carType) }
+
+        bind<StudentDao>() with singleton { StudentDaoImpl() }
+        bind<StudentRepository>() with singleton { StudentRepositoryImpl(instance()) }
+        bind() from provider { StudentsViewModelFactory(instance()) }
     }
 
     override fun onCreate() {
